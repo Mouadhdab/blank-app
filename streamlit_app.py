@@ -151,10 +151,17 @@ if uploaded_file is not None:
     st.image(image, caption='Bordereau chargé', use_column_width=True)
     
     # Extraire le texte de l'image
-    texte = pytesseract.image_to_string(image)
-    st.write("Texte extrait :", texte)
-    
-    # Simuler l'analyse d'un tuyau basé sur des données extraites
+    try:
+        texte = pytesseract.image_to_string(image)
+        st.write("Texte extrait :", texte)
+        
+        # Simuler l'analyse d'un tuyau basé sur des données extraites
+        # Vous pouvez remplacer les valeurs ici par celles extraites du texte
+        conforme, message = verifier_conformite("acier_sans_soudure", 25, 10.0, 4.0, "léger")
+        st.write(f"Conformité: {conforme}, Message: {message}")
+    except Exception as e:
+        st.error(f"Une erreur est survenue lors de l'extraction du texte : {e}")
+
     # Vous pouvez remplacer les valeurs ici par celles extraites du texte
     conforme, message = verifier_conformite("acier_sans_soudure", 25, 10.0, 4.0, "léger")
     st.write(f"Conformité: {conforme}, Message: {message}")
